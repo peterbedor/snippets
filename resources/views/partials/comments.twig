@@ -14,10 +14,7 @@
 		{{ form.button({
 			text: 'Submit',
 			class: 'comment__reply-button',
-			dataRef: 'commentButton',
-			attributes: {
-				'data-id': data.id
-			}
+			dataRef: 'commentButton'
 		}) }}
 	</div>
 	{% for comment in snippet.comments %}
