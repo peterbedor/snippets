@@ -22,9 +22,21 @@ Wee.fn.make('comments', {
 		$.events.on({
 			'ref:commentButton': {
 				click: function() {
+					var $comments = $('ref:comments');
+
 					scope.comment(function(data) {
-						$('ref:comments').append(data);
+						// Append comment
+						$comments.append(data);
+
+						// Reset form
 						$('ref:commentBody').val('');
+
+						// Attach tribute event listeners to new textarea
+						Wee.mentions.attach(
+							$comments.children()
+								.last()
+								.find('textarea')[0]
+						);
 					});
 				}
 			},
@@ -56,13 +68,6 @@ Wee.fn.make('comments', {
 						// Reset comment form
 						$('ref:commentReply-' + id).toggle();
 						$body.val('');
-
-						// Rebind events
-						$.setRef();
-						scope.rebindEvents();
-
-						// Remove all current mentions from store
-						Wee.mentions.clearMentions();
 					});
 				}
 			}
@@ -77,7 +82,7 @@ Wee.fn.make('comments', {
 		}, callback);
 	},
 
-	reply: function(data) {
+	reply: function(data, callback) {
 		this.submitComment({
 			body: data.body,
 			parentId: data.parentId
@@ -85,15 +90,29 @@ Wee.fn.make('comments', {
 	},
 
 	submitComment: function(data, callback) {
+		var scope = this;
+
 		data = $.extend(data, {
 			mentions: Wee.mentions.getMentions()
 		});
 
 		Wee.api.post({
-			url: this.url,
+			url: scope.url,
 			data: data,
 			success: function(response) {
 				callback(response);
+
+				// Rebind events
+				$.setRef();
+				scope.rebindEvents();
+
+				// Remove all current mentions from store
+				Wee.mentions.clearMentions();
+
+				// TODO: probably want to just highlight the newly created block
+				// TODO: instead of all of them.
+				// Run highlight JS in case there was any code submitted
+				Wee.highlight.init();
 			}
 		})
 	},
