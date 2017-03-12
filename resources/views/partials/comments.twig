@@ -1,0 +1,28 @@
+{% import 'macros.forms' as form %}
+
+<div class="comments" data-ref="comments" data-slug="{{ snippet.slug }}">
+	<div class="comment__form" data-ref="commentForm">
+		{{ form.textarea({
+			name: 'comment_reply',
+			dataRef: 'weeMention commentBody',
+			attributes: {
+				'data-id': data.id
+			}
+		}) }}
+		{% include 'partials.mentions' %}
+
+		{{ form.button({
+			text: 'Submit',
+			class: 'comment__reply-button',
+			dataRef: 'commentButton',
+			attributes: {
+				'data-id': data.id
+			}
+		}) }}
+	</div>
+	{% for comment in snippet.comments %}
+		{% if comment.parent_id is empty %}
+			{% include 'partials.comment' with { data: comment } %}
+		{% endif %}
+	{% endfor %}
+</div>

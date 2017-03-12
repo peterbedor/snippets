@@ -1,0 +1,18 @@
+<div class="avatar-wrap">
+	{% if user.avatar %}
+		<img src="{{ user.avatar }}" class="{{ class|default('avatar') }}">
+	{% else %}
+		<img src="https://api.adorable.io/avatars/285/{{ user.email }}.png" class="{{ class|default('avatar') }}">
+	{% endif %}
+	{% if notifications|length %}
+		<div class="avatar__notifications">
+			<div class="avatar__notifications-count" data-ref="notifications">
+				{{ notifications|length }}
+			</div>
+		</div>
+		<div class="js-hide" data-ref="notificationsPanel">
+			{% include 'partials.notifications.list' %}
+		</div>
+	{% endif %}
+</div>
+

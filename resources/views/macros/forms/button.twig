@@ -1,0 +1,10 @@
+<button
+	type="{{ params.type|default('button') }}"
+	class="button{% if params.colored %} button-colored{% endif %}{% if params.class %} {{ params.class }}{% endif %}"
+	{% if params.dataRef %}
+		data-ref="{{ params.dataRef }}"
+	{% endif %}
+	{% include 'partials.attributes' %}
+>
+	{{ params.text }}
+</button>

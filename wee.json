@@ -1,0 +1,99 @@
+{
+	"name": "Snippets",
+	"paths": {
+		"root": "public",
+		"assets": "assets",
+		"source": "resources"
+	},
+	"data": {},
+	"style": {
+		"data": {},
+		"core": {
+			"namespace": false,
+			"features": {
+				"buttons": true,
+				"code": false,
+				"forms": true,
+				"print": true,
+				"tables": true
+			},
+			"responsive": {
+				"enable": true,
+				"offset": 25,
+				"breakpoints": {
+					"mobileLandscape": 480,
+					"tabletPortrait": 768,
+					"desktopSmall": 1024,
+					"desktopMedium": 1280,
+					"desktopLarge": 1440
+				}
+			}
+		},
+		"build": [],
+		"compile": {
+			"lib/vendor/hljs/*": []
+		}
+	},
+	"script": {
+		"data": {},
+		"core": {
+			"enable": true,
+			"namespace": "Wee",
+			"features": {
+				"animate": true,
+				"assets": true,
+				"chain": true,
+				"data": true,
+				"dom": true,
+				"events": true,
+				"history": true,
+				"routes": true,
+				"screen": true,
+				"touch": true,
+				"view": true
+			}
+		},
+		"build": [],
+		"compile": {},
+		"validate": {
+			"watch": true,
+			"jscs": "resources/.jscs.json",
+			"jshint": "resources/.jshintrc"
+		},
+		"sourceMaps": true
+	},
+	"generator": {
+		"enable": false,
+		"build": []
+	},
+	"defaultCommand": "run:local",
+	"server": {
+		"ghostMode": false,
+		"host": "auto",
+		"port": 9000,
+		"inject": [],
+		"reload": {
+			"enable": true,
+			"ignore": [],
+			"watch": {
+				"root": true,
+				"paths": [
+					"resources/views"
+				],
+				"extensions": [
+					"html",
+					"twig"
+				]
+			}
+		},
+		"tasks": {
+			"local": {
+				"https": true,
+				"proxy": "https://snippets.dev"
+			},
+			"static": {
+				"https": true
+			}
+		}
+	}
+}

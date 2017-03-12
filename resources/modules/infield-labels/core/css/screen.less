@@ -1,0 +1,56 @@
+.field {
+	.spaced(2);
+	&.-transition {
+		label {
+			.transition();
+		}
+	}
+	&.-infield-label {
+		.relative();
+		label {
+			.absolute(1.1; false; false; 1.7);
+			.lightGray();
+			.font-size(1.6);
+			.cursor(text);
+			.spaced(0);
+		}
+		input[type="file"],
+		input[type="number"],
+		input[type="password"],
+		input[type="search"],
+		input[type="tel"],
+		input[type="text"],
+		input[type="email"],
+		textarea {
+			.spaced(0);
+			&.-has-error {
+				.border(@warning);
+			}
+		}
+		&.-is-focused,
+		&.-is-active {
+			label {
+				.darkGray();
+				.font-size(1.1);
+				.top(.2);
+				.translate(y; 0);
+			}
+			input[type="file"],
+			input[type="number"],
+			input[type="password"],
+			input[type="search"],
+			input[type="tel"],
+			input[type="text"],
+			input[type="email"],
+			textarea {
+				.padding(vertical; 1.5; .5);
+			}
+		}
+	}
+	&__errors {
+		.color(@warning);
+		.font-size(1.3);
+		.spaced(0);
+		.unstyled();
+	}
+}

@@ -1,0 +1,19 @@
+{
+	"name": "infield-labels",
+	"version": "0.1.0",
+	"description": "Show labels on top of form fields that transition on focus.",
+	"homepage": "",
+	"author": "Ryan Payne - Caddis",
+	"autoload": true,
+	"extension": true,
+	"data": {},
+	"style": {
+		"build": []
+	},
+	"script": {
+		"build": []
+	},
+	"dependencies": {
+		"wee": "^3.0.0"
+	}
+}

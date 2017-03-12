@@ -1,0 +1,27 @@
+{% extends pjax ? 'layouts.pjax' : 'layouts.split' %}
+
+{% set title = snippet.name %}
+
+{% block body %}
+	<div class="snippet-show">
+		<div class="snippet-show__header">
+			<div class="snippet-show__author">
+				{% include 'includes.avatar' with {
+					user: snippet.author,
+					class: 'snippet-show__author-avatar'
+				} %}
+				<p>{{ snippet.author.fullName }}</p>
+			</div>
+			<div class="snippet-show__info">
+				<h2>{{ snippet.name }}</h2>
+				<p>{{ snippet.description }}</p>
+			</div>
+		</div>
+	</div>
+
+	{% for file in snippet.files %}
+		{% include 'snippets._file' %}
+	{% endfor %}
+
+	{% include 'partials.comments' %}
+{% endblock %}

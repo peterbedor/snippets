@@ -1,0 +1,7 @@
+<ul class="nav__menu">
+	{% for language in languages %}
+		<li class="nav__item">
+			<a href="/languages/{{ language.slug }}" class="nav__link">{{ language.name }}</a>
+		</li>
+	{% endfor %}
+</ul>

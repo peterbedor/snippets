@@ -1,0 +1,7 @@
+<ul class="notifications-list" data-ref="notificationsList">
+	{% for notification in notifications %}
+		{% include 'partials.notifications.types.' ~ baseName(notification.type)|snakeCase %}
+	{% endfor %}
+
+	<div class="notifications-list__mark-all" data-ref="markAllAsRead">Mark all as read</div>
+</ul>

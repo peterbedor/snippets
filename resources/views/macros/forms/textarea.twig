@@ -1,0 +1,12 @@
+{% if params.label %}
+	<label for="{{ params.name|lower|default(params.label|snakeCase) }}">{{ params.label }}</label>
+{% endif %}
+<textarea
+	rows="{{ params.cols|default(4) }}"
+	name="{{ params.name|lower|default(params.label|snakeCase) }}"
+	id="{{ params.id|lower|default(params.label|snakeCase) }}"
+	data-ref="{% if params.dataRef %}{{ params.dataRef }}{% endif %}"
+	placeholder="{{ params.placeholder|default('') }}"
+	class="{{ params.class }}{% if params.errors %} -has-error{% endif %}"
+	{% include 'partials.attributes' %}
+>{{ old(params.name|default(params.label|snakeCase)) }}</textarea>

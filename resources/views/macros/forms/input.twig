@@ -1,0 +1,18 @@
+<div class="field{% if params.infieldLabel %} -infield-label{% endif %}">
+    <label for="{{ params.name|lower }}">{{ params.name|capitalize }}</label>
+    <input
+		type="{{ params.type|default('text') }}"
+		name="{{ params.name|lower }}"
+		id="{{ params.name|lower }}"
+		value="{{ params.value|default('') }}"
+		data-ref="{% if params.dataRef %}{{ params.dataRef }}{% endif %}{% if params.infieldLabel %} infieldInput{% endif %}"
+		class="{% if params.errors %} -has-error{% endif %}"
+	>
+	{% if params.errors %}
+		<ul class="field__errors">
+			{% for error in params.errors %}
+				<li class="field__error">{{ error }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+</div>

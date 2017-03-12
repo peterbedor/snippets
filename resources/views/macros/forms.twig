@@ -1,0 +1,20 @@
+{% macro input(params) %}
+	{% include 'macros.forms.input' with { params: params } %}
+{% endmacro %}
+
+{% macro submit(params) %}
+	{% set params = params|merge({
+		type: 'submit',
+		text: 'Submit'
+	}) %}
+
+	{% include 'macros.forms.button' with { params: params } %}
+{% endmacro %}
+
+{% macro button(params) %}
+	{% include 'macros.forms.button' with { params: params } %}
+{% endmacro %}
+
+{% macro textarea(params) %}
+	{% include 'macros.forms.textarea' with { params: params } %}
+{% endmacro %}

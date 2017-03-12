@@ -1,0 +1,43 @@
+{% if object.lastPage() > 1 %}
+
+	{# The number of first and last pages to be displayed #}
+	{% set extremePagesLimit = 1 %}
+
+	{# The number of pages that are displayed around the active page #}
+	{% set nearbyPagesLimit = 1 %}
+
+	{# Persistant first and last links #}
+	{% set showAlwaysFirstAndLast = true %}
+
+	<div class="pagination">
+		{% if object.currentPage() > 1 %}
+			<a href="{{ object.previousPageUrl() }}" class="pagination__prev"><i class="fa fa-chevron-left"></i></a>
+			{% for i in range(1, extremePagesLimit) if (i < object.currentPage() - nearbyPagesLimit) %}
+				<a href="{{ object.url(i) }}" class="pagination__link">{{ i }}</a>
+			{% endfor %}
+			{% if extremePagesLimit + 1 < object.currentPage() - nearbyPagesLimit %}
+				<span class="sep-dots">&hellip;</span>
+			{% endif %}
+			{% for i in range(object.currentPage() - nearbyPagesLimit, object.currentPage() - 1) if ( i > 0 ) %}
+				<a href="{{ object.url(i) }}" class="pagination__link">{{ i }}</a>
+			{% endfor %}
+		{% elseif showAlwaysFirstAndLast %}
+			<span class="pagination__prev -is-disabled"><i class="fa fa-chevron-left"></i></span>
+		{% endif %}
+		<a href="{{ object.url(object.currentPage()) }}" class="pagination__link -is-active">{{ object.currentPage() }}</a>
+		{% if object.currentPage() < object.lastPage() %}
+			{% for i in range(object.currentPage() + 1, object.currentPage() + nearbyPagesLimit) if (i <= object.lastPage()) %}
+				<a href="{{ object.url(i) }}" class="pagination__link">{{ i }}</a>
+			{% endfor %}
+			{% if  (object.lastPage() - extremePagesLimit) > (object.currentPage() + nearbyPagesLimit) %}
+				<span class="sep-dots">&hellip;</span>
+			{% endif %}
+			{% for i in range(object.lastPage() - extremePagesLimit + 1, object.lastPage()) if (i > object.currentPage() + nearbyPagesLimit) %}
+				<a href="{{ object.url(i) }}" class="pagination__link">{{ i }}</a>
+			{% endfor %}
+			<a href="{{ object.nextPageUrl() }}" class="pagination__next"><i class="fa fa-chevron-right"></i></a>
+		{% elseif showAlwaysFirstAndLast %}
+			<span class="pagination__next -is-disabled"><i class="fa fa-chevron-right"></i></span>
+		{% endif %}
+	</div>
+{% endif %}

@@ -1,0 +1,13 @@
+<div class="file">
+	<div class="file__header">
+		<h3 class="file__name">{{ file.name }}.{{ file.language.extension }}</h3>
+		<div class="file__actions">
+			<button class="file__action" data-ref="copy" data-clipboard-target="#file-{{ file.id }}">Copy</button>
+			<a href="/snippets/{{ snippet.slug }}/file/{{ file.id }}/raw" class="button file__action" data-static>Raw</a>
+			<a href="/snippets/{{ snippet.slug }}/file/{{ file.id }}/download" class="button file__action" data-static>Download</a>
+		</div>
+	</div>
+	<div class="file__body">
+		<pre><code class="{{ file.language.slug }}" id="file-{{ file.id }}">{{ file.body }}</code></pre>
+	</div>
+</div>

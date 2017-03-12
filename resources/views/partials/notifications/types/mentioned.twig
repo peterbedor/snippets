@@ -1,0 +1,7 @@
+{% set data = notification.data %}
+
+{% if data.mentioner %}
+	<li class="notifications-list__item">{{ data.mentioner }} mentioned you in a <a href="{{ url('/snippets') }}/{{ data.snippet_slug }}#comment-{{ data.comment_id }}" data-ref="markAsRead" data-id="{{ notification.id }}">comment</a>{% include 'partials.notifications.timestamp' %}</li>
+{% else %}
+	<li class="notifications-list__item">You were mentioned in a comment.{% include 'partials.notifications.timestamp' %}</li>
+{% endif %}

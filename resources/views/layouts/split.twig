@@ -1,0 +1,18 @@
+{% extends 'layouts.master' %}
+
+{% block content %}
+	<div class="page-wrap">
+		<div class="sidebar">
+			{% include 'partials.sidebar' %}
+		</div>
+
+		<main class="content" data-ref="main">
+			<div class="content__header" data-ref="header">
+				{% include 'partials.header' %}
+			</div>
+			<div class="content__inner">
+				{{ block('body') }}
+			</div>
+		</main>
+	</div>
+{% endblock %}

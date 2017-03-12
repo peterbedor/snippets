@@ -1,0 +1,52 @@
+{% set reply = data.parent_id is not empty %}
+{% set avatarClass = 'comment__user-avatar' %}
+
+{% if reply %}
+	{% set avatarClass = avatarClass ~ ' -reply' %}
+{% endif %}
+
+{% import 'macros.forms' as form %}
+
+<div class="{% if reply %}comment__reply{% else %}comment{% endif %}" data-ref="comment comment-{{ data.id }}" data-snippet="{{ snippet.slug|default(slug) }}" id="comment-{{ data.id }}">
+	<div class="comment__header{% if reply %} -reply{% endif %}">
+		{% include 'includes.avatar' with {
+			user: data.author,
+			class: avatarClass
+		} %}
+		{# TODO: find out why fullName attribute is unavailable here #}
+		<h5 class="comment__author-name{% if reply %} -reply{% endif %}">{{ data.author.first_name }} {{ data.author.last_name }}</h5>
+	</div>
+	<div class="comment__body{% if reply %} -reply{% endif %}">
+		{{ markdown(parseMentions(data.body, data.mentions)|striptags('<a></a>')|raw)|raw }}
+	</div>
+	<div class="comment__meta{% if reply %} -reply{% endif %}">
+		<span class="comment__meta-item{% if reply %} -reply{% endif %}">Posted: {{ data.created_at|date('l, F jS Y') }} at {{ data.created_at|date('g:i a') }}</span>
+		<span class="comment__meta-item{% if reply %} -reply{% endif %} -action" data-ref="reply" data-id="{{ data.id }}">Reply</span>
+	</div>
+	<div class="comment__reply-form{% if reply %} -reply{% endif %} js-hide" data-ref="commentReply commentReply-{{ data.id }}">
+		{{ form.textarea({
+			name: 'comment_reply',
+			dataRef: 'weeMention commentReplyBody-' ~ data.id,
+			attributes: {
+				'data-id': data.id
+			}
+		}) }}
+		{% include 'partials.mentions' %}
+
+		{{ form.button({
+			text: 'Submit',
+			class: 'comment__reply-button',
+			dataRef: 'commentReplyButton',
+			attributes: {
+				'data-id': data.id
+			}
+		}) }}
+	</div>
+	<div class="comment__replies {% if reply %} -reply{% endif %}" data-ref="replies-{{ data.id }}">
+		{% if data.replies is not empty %}
+			{% for reply in data.replies %}
+				{% include 'partials.comment' with { data: reply } %}
+			{% endfor %}
+		{% endif %}
+	</div>
+</div>

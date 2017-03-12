@@ -1,0 +1,14 @@
+<div class="logo{% if modifier %} {{ modifier }}{% endif %}">
+	{% if link %}
+		<a href="{{ link }}">
+	{% endif %}
+			<svg width="{{ width|default(146) }}" height="{{ height|default(180) }}" viewBox="0 0 146 180" xmlns="http://www.w3.org/2000/svg">
+				<g fill-rule="evenodd" fill="{{ fill|default('#ce262c') }}">
+					<path d="M90.185 56.168H73.573V84.79h24.2V70.42h11.237v26.723H44.162V84.79h16.596V56.168h-16.58l-.016-11.29h46.023v11.29"/>
+					<path d="M0 .64v145.175l59.785 33.945v-33.945h85.298V95.52H128.57v33.116H16.43v-112.9h112.14v35.216H145.1V.642H0"/>
+				</g>
+			</svg>
+	{% if link %}
+		</a>
+	{% endif %}
+</div>

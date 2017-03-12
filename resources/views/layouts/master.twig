@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" id="global" itemscope itemtype="http://schema.org/WebPage">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+	<meta name="robots" content="noindex, follow">
+
+	<title>{{ title ?: 'Snippets' }} | Lewis Snippets</title>
+
+	<link rel="stylesheet" href="/assets/css/style.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans:300,400,600,700" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="apple-touch-icon" href="/assets/img/icons/touch.png">
+	<link rel="mask-icon" href="/assets/img/icons/pin.svg" color="#349bb9">
+
+	<!--[if lte IE 9]>
+	<script src="/assets/js/ie9.min.js"></script>
+	<![endif]-->
+</head>
+<body{% if bodyClass %} class="{{ bodyClass }}"{% endif %}>
+	{{ block('content') }}
+
+	<meta data-set="csrfToken" data-value="{{ csrf_token() }}">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tributejs/2.3.3/tribute.min.js"></script>
+	<script src="/assets/js/script.min.js"></script>
+</body>
+</html>

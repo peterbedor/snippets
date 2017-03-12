@@ -1,0 +1,13 @@
+{% extends pjax ? 'layouts.pjax' : 'layouts.split' %}
+
+{% set title = 'Snippets' %}
+
+{% block body %}
+	<div class="snippets">
+		{% for snippet in snippets %}
+			{% include 'snippets._snippet' %}
+		{% endfor %}
+	</div>
+
+	{% include 'partials.pagination' with { object: snippets } %}
+{% endblock %}
