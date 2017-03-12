@@ -1,8 +1,9 @@
 {% if params.label %}
 	<label for="{{ params.name|lower|default(params.label|snakeCase) }}">{{ params.label }}</label>
 {% endif %}
+
 <textarea
-	rows="{{ params.cols|default(4) }}"
+	rows="{{ params.rows|default(4) }}"
 	name="{{ params.name|lower|default(params.label|snakeCase) }}"
 	id="{{ params.id|lower|default(params.label|snakeCase) }}"
 	data-ref="{% if params.dataRef %}{{ params.dataRef }}{% endif %}"

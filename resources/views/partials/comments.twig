@@ -5,17 +5,23 @@
 		{{ form.textarea({
 			name: 'comment_reply',
 			dataRef: 'weeMention commentBody',
+			rows: 6,
 			attributes: {
 				'data-id': data.id
 			}
 		}) }}
 		{% include 'partials.mentions' %}
 
-		{{ form.button({
-			text: 'Submit',
-			class: 'comment__reply-button',
-			dataRef: 'commentButton'
-		}) }}
+		<div class="comment__form-bottom">
+			<div class="comment__form-info">
+				Press @ to mention a user in a comment.  Supports markdown.
+			</div>
+			{{ form.button({
+				text: 'Submit',
+				class: 'comment__reply-button',
+				dataRef: 'commentButton'
+			}) }}
+		</div>
 	</div>
 	{% for comment in snippet.comments %}
 		{% if comment.parent_id is empty %}
