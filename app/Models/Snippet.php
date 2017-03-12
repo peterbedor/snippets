@@ -11,6 +11,10 @@ class Snippet extends Model
 	use UniqueSlug;
 	use Likeable;
 
+	protected $appends = [
+		'commentCount'
+	];
+
     protected $fillable = [
     	'name',
 		'slug',
@@ -56,6 +60,11 @@ class Snippet extends Model
 	public function comments()
 	{
 		return $this->hasMany(Comment::class);
+    }
+
+	public function getCommentCountAttribute()
+	{
+		return $this->comments()->whereNull('parent_id')->get()->count();
     }
 
 	/**

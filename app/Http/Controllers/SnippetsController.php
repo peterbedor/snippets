@@ -23,7 +23,7 @@ class SnippetsController extends Controller
      */
     public function index()
     {
-    	$snippets = Snippet::with('files.language', 'author', 'likes', 'likers', 'comments')
+    	$snippets = Snippet::with('files.language', 'author', 'likes', 'likers')
 			->paginate(10);
 
         return $this->handleResponse('snippets.index', [
