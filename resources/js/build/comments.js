@@ -40,6 +40,11 @@ Wee.fn.make('comments', {
 					});
 				}
 			},
+			'ref:delete': {
+				click: function() {
+					scope.deleteComment($(this));
+				}
+			},
 			'ref:reply': {
 				click: function() {
 					$('ref:commentReply-' + $(this).data('id')).toggle();
@@ -55,19 +60,37 @@ Wee.fn.make('comments', {
 						body: $body.val(),
 						parentId: id
 					}, function(response) {
+						var $code;
+
 						// Append new comment to comments
 						$replies.append(response);
 
 						// Attach tribute event listeners to new textarea
 						Wee.mentions.attach(
-							$replies.children()
-								.last()
-								.find('textarea')[0]
+							$replies.children().last().find('textarea')[0]
 						);
 
 						// Reset comment form
 						$('ref:commentReply-' + id).toggle();
 						$body.val('');
+
+						// Run highlight JS in case there was any code submitted
+						$code = $replies.children().last().find('pre code');
+
+						if ($code.length) {
+							Wee.highlight.block($code[0]);
+						}
+
+						Wee.flash.success({
+							message: 'Comment posted successfully'
+						});
+
+					}, function(response) {
+						response = JSON.parse(response.response);
+
+						Wee.flash.error({
+							message: response.body[0]
+						});
 					});
 				}
 			}
@@ -82,14 +105,14 @@ Wee.fn.make('comments', {
 		}, callback);
 	},
 
-	reply: function(data, callback) {
+	reply: function(data, success, error) {
 		this.submitComment({
 			body: data.body,
 			parentId: data.parentId
-		}, callback);
+		}, success, error);
 	},
 
-	submitComment: function(data, callback) {
+	submitComment: function(data, success, error) {
 		var scope = this;
 
 		data = $.extend(data, {
@@ -100,7 +123,7 @@ Wee.fn.make('comments', {
 			url: scope.url,
 			data: data,
 			success: function(response) {
-				callback(response);
+				success(response);
 
 				// Rebind events
 				$.setRef();
@@ -108,11 +131,9 @@ Wee.fn.make('comments', {
 
 				// Remove all current mentions from store
 				Wee.mentions.clearMentions();
-
-				// TODO: probably want to just highlight the newly created block
-				// TODO: instead of all of them.
-				// Run highlight JS in case there was any code submitted
-				Wee.highlight.init();
+			},
+			error: function(response) {
+				error(response);
 			}
 		})
 	},
@@ -120,5 +141,28 @@ Wee.fn.make('comments', {
 	rebindEvents: function() {
 		$.events.off('', '.comments');
 		this.bindEvents();
+	},
+
+	deleteComment: function($el) {
+		var scope = this,
+			id = $el.data('id');
+
+		Wee.api.post({
+			url: scope.url,
+			method: 'delete',
+			json: true,
+			data: {
+				id: id
+			},
+			success: function(data) {
+				if (data.message === 'Success') {
+					$('ref:comment-' + id).remove();
+
+					Wee.flash.success({
+						message: data.message
+					});
+				}
+			}
+		});
 	}
 });

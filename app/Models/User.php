@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
 
+use Auth;
+use App\Traits\Likeable;
 use Laravel\Scout\Searchable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,6 +11,7 @@ class User extends Authenticatable
 {
     use Notifiable;
     use Searchable;
+    use Likeable;
 
     protected $with = [
     	'notifications'
@@ -71,6 +74,14 @@ class User extends Authenticatable
 	public function comments()
 	{
 		return $this->hasMany(Comment::class);
+    }
+
+	public static function setTheme($theme)
+	{
+		$user = Auth::user();
+		$user->hljs_theme = $theme;
+
+		return $user->save();
     }
 
 	/**

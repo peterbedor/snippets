@@ -21,7 +21,12 @@
 	</div>
 	<div class="comment__meta{% if reply %} -reply{% endif %}">
 		<span class="comment__meta-item{% if reply %} -reply{% endif %}">Posted: {{ data.created_at|date('l, F jS Y') }} at {{ data.created_at|date('g:i a') }}</span>
-		<span class="comment__meta-item{% if reply %} -reply{% endif %} -action" data-ref="reply" data-id="{{ data.id }}">Reply</span>
+		<div class="comment__meta-actions">
+			{% if data.author.username == auth_user().username %}
+				<span class="comment__meta-item {% if reply %} -reply{% endif %} -action" data-ref="delete" data-id="{{ data.id }}">Delete</span>
+			{% endif %}
+			<span class="comment__meta-item{% if reply %} -reply{% endif %} -action" data-ref="reply" data-id="{{ data.id }}">Reply</span>
+		</div>
 	</div>
 	<div class="comment__reply-form{% if reply %} -reply{% endif %} js-hide" data-ref="commentReply commentReply-{{ data.id }}">
 		{{ form.textarea({

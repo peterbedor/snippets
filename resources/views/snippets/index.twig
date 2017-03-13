@@ -3,11 +3,16 @@
 {% set title = 'Snippets' %}
 
 {% block body %}
-	<div class="snippets">
-		{% for snippet in snippets %}
-			{% include 'snippets._snippet' %}
-		{% endfor %}
-	</div>
+	{% if snippets is not empty %}
+		<div class="snippets">
+			<h1>{{ header }}</h1>
+			{% for snippet in snippets %}
+				{% include 'snippets._snippet' %}
+			{% endfor %}
+		</div>
+	{% else %}
+		<h1>No snippets yet :(</h1>
+	{% endif %}
 
 	{% include 'partials.pagination' with { object: snippets } %}
 {% endblock %}

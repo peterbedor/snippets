@@ -51,9 +51,21 @@ Wee.fn.make('showSnippet', {
 		scope.clipboards = [];
 
 		$copy.each(function(copy) {
-			scope.clipboards.push(
-				new Clipboard(copy)
-			);
+			var clipboard = new Clipboard(copy);
+
+			clipboard.on('success', function() {
+				Wee.flash.success({
+					message: 'Copied to clipboard!'
+				});
+			});
+
+			clipboard.on('error', function() {
+				Wee.flash.error({
+					message: 'There was an error'
+				});
+			});
+
+			scope.clipboards.push(clipboard);
 		});
 	},
 

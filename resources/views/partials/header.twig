@@ -1,3 +1,8 @@
+<ul class="content__header-menu">
+	<li class="content__header-item"><a href="/settings">Settings</a></li>
+	<li class="content__header-item"><a href="/users/{{ auth_user().username }}">Your Snippets</a></li>
+	<li class="content__header-item"><a href="/favorites">Your Favorites</a></li>
+</ul>
 <div class="content__header-user-info">
 	{% include 'includes.avatar' with {
 		user: auth_user(),

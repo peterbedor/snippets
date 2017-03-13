@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Auth;
 use App\Models\Snippet;
 use Illuminate\Http\Request;
@@ -97,5 +98,36 @@ class SnippetsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+	public function language($slug)
+	{
+		$snippets = Snippet::byLanguage($slug)->paginate(10);
+
+		return $this->handleResponse('snippets.index', [
+        	'snippets' => $snippets,
+			'header' => strtoupper($slug)
+		]);
+    }
+
+	public function user($username)
+	{
+		$snippets = Auth::user()->snippets()->paginate(10);
+
+		return $this->handleResponse('snippets.index', [
+			'snippets' => $snippets,
+			'header' => strtoupper($username)
+		]);
+    }
+
+	public function favorites($username = false)
+	{
+		$favoriter = $username ? User::getByUsername($username) : Auth::user();
+
+		$snippets = Snippet::withRelations()->likedBy($favoriter)->paginate(10);
+
+		return view('snippets.index', [
+			'snippets' => $snippets
+		]);
     }
 }

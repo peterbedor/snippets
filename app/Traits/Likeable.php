@@ -63,6 +63,13 @@ trait Likeable
 		return false;
 	}
 
+	public function scopeLikedBy($query, User $user)
+	{
+		return $query->whereHas('likes', function ($query) use ($user) {
+			$query->where('user_id', $user->id);
+		});
+	}
+
 	/**
 	 * Toggle liked state
 	 *

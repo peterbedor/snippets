@@ -17,4 +17,9 @@ class Language extends Model
 	{
 		return $this->hasMany(File::class);
 	}
+
+	public static function getBySlug($slug): Language
+	{
+		return Language::where('slug', $slug)->first();
+	}
 }

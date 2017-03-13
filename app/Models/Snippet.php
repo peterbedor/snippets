@@ -73,18 +73,32 @@ class Snippet extends Model
 	 */
 	public static function getBySlug($slug): Snippet
 	{
-		$snippet = self::with(
-				'files.language',
-				'author',
-				'likes',
-				'likers',
-				'comments.mentions.user',
-				'comments.author',
-				'comments.replies.author'
-			)
+		$snippet = self::withRelations()
 			->where('slug', $slug)
 			->first();
 
 		return $snippet;
     }
+
+    public static function byLanguage($slug)
+	{
+		$language = Language::getBySlug($slug);
+
+		return self::withRelations()
+			->whereHas('files.language', function($query) use ($language) {
+				$query->where('language_id', $language->id);
+			});
+	}
+
+	public static function withRelations()
+	{
+		return self::with('files.language',
+			'author',
+			'likes',
+			'likers',
+			'comments.mentions.user',
+			'comments.author',
+			'comments.replies.author'
+		);
+	}
 }

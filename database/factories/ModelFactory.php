@@ -11,7 +11,7 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
 		'username' => $faker->userName,
         'email' => $email,
 		'avatar' => 'https://api.adorable.io/avatars/285/' . $email . '.png',
-        'password' => $password ?: $password = bcrypt('secret'),
+        'password' => $password ?: bcrypt('secret'),
         'remember_token' => str_random(10),
     ];
 });

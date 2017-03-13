@@ -86,11 +86,20 @@ html {
 		.background(@white);
 		.border(bottom; @lightGray);
 		.display(flex);
-		.justify-content(flex-end);
+		.justify-content(space-between);
 		.min-height(6);
 		.fixed(0; 0; false; 26);
 		.padding(1.5);
 		.z-index(100);
+	}
+	&__header-menu {
+		.flex-align-self(center);
+		.unstyled();
+		.spaced(0);
+	}
+	&__header-item {
+		.inline-block();
+		.margin(right; 1.5);
 	}
 	&__inner {
 		.background(@lightestGray);
@@ -363,6 +372,9 @@ html {
 			.padding(horizontal; 1);
 		}
 	}
+	&__meta-actions {
+		.flex-align-self(flex-end);
+	}
 	&__meta-item {
 		.gray();
 		.font-size(1.2);
@@ -559,4 +571,19 @@ html {
 		.bold();
 		.background(@lighterGray);
 	}
+}
+
+
+
+
+
+/*------------------------------------*\
+	# Settings
+\*------------------------------------*/
+
+.settings {
+	.centered-block(50);
+}
+.hljs {
+	.line-height(2.2);
 }

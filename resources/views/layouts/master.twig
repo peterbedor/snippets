@@ -20,7 +20,9 @@
 <body{% if bodyClass %} class="{{ bodyClass }}"{% endif %}>
 	{{ block('content') }}
 
+	<div data-ref="flash" class="flash js-hide"></div>
 	<meta data-set="csrfToken" data-value="{{ csrf_token() }}">
+	<meta data-set="hljsTheme" data-value="{{ auth_user().hljs_theme }}">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tributejs/2.3.3/tribute.min.js"></script>
 	<script src="/assets/js/script.min.js"></script>
 </body>

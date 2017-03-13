@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Http\Requests\StoreComment;
 use App\Models\Comment;
 use Illuminate\Http\Request;
@@ -89,8 +90,19 @@ class CommentsController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy($id)
+	public function destroy(Request $request)
 	{
-		//
+		$success = false;
+		$comment = Comment::find($request->input('id'));
+
+		if ($comment->user_id === Auth::id()) {
+			$success = Comment::destroy($request->input('id'));
+		}
+
+		if ($success) {
+			return response()->json([
+				'message' => 'Success'
+			]);
+		}
 	}
 }

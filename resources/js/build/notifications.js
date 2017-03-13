@@ -4,42 +4,34 @@ Wee.fn.make('notifications', {
 	}
 }, {
 	init: function() {
-		this.$count = $('ref:notifications');
-		this.$markAsRead = $('ref:markAsRead');
 		this.$panel = $('ref:notificationsPanel');
-		this.$list = $('ref:notificationsList');
+		this.$countBubble = $('ref:notifications');
+		this.count = parseInt(this.$countBubble.text());
+
 		this.bindEvents();
 
-		this.startPinging();
-
-		this.currentCount = parseInt(
-			this.$count.text()
-		);
+		$._win.setInterval(this.ping.bind(this), 5000);
 	},
+
 	bindEvents: function() {
 		var scope = this;
 
-		this.$count.on('click.notifications', function() {
+		this.$countBubble.on('click', function() {
 			scope.$panel.toggle();
 		}, {
-			delegate: 'ref:header'
+			namespace: 'notifications'
 		});
 
-		this.$markAsRead.on('click.notifications', function() {
+		$('ref:markAsRead').on('click', function() {
 			var $this = $(this);
 
-			scope.markAsRead(
-				$this.data('id'),
-				$this
-			)
+			scope.markAsRead($this.data('id'), $this);
 		}, {
-			delegate: 'ref:header'
+			namespace: 'notifications'
 		});
 
-		$('ref:markAllAsRead').on('click.notifications', function() {
+		$('ref:markAllAsRead').on('click', function() {
 			scope.markAsRead();
-		}, {
-			delegate: 'ref:header'
 		});
 	},
 
@@ -53,29 +45,15 @@ Wee.fn.make('notifications', {
 				id: id
 			},
 			success: function(data) {
-				scope.updateNotifications(data.payload, $el);
+				if (data) {
+					if ($el) {
+						$el.parent().remove();
+					} else {
+						$('ref:notificationsList').children().remove();
+					}
+				}
 			}
 		});
-	},
-
-	updateNotifications: function(data, $el) {
-		if (! data.length) {
-			this.$count.parent().hide();
-		} else {
-			this.$count.text(data.length);
-		}
-
-		this.$panel.toggle();
-
-		$el.parent().remove();
-	},
-
-	startPinging: function() {
-		var scope = this;
-
-		$._win.setInterval(function() {
-			scope.ping();
-		}, 5000);
 	},
 
 	ping: function() {
@@ -88,19 +66,11 @@ Wee.fn.make('notifications', {
 				var notifications = data.html,
 					newCount = data.count;
 
-				if (newCount > scope.currentCount) {
-					scope.updateCount(newCount);
-					scope.updateNotificationsList(notifications);
+				if (newCount > scope.count) {
+					scope.$countBubble.text(newCount);
+					scope.$panel.html(notifications);
 				}
 			}
 		})
-	},
-
-	updateNotificationsList: function(notifications) {
-		this.$panel.html(notifications);
-	},
-
-	updateCount: function(count) {
-		this.$count.text(count);
 	}
 });

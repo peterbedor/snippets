@@ -1,0 +1,14 @@
+{% extends pjax ? 'layouts.pjax' : 'layouts.split' %}
+
+{% set title = 'Settings' %}
+
+{% block body %}
+	<div class="settings">
+		Theme
+		<select data-ref="theme">
+			{% for name,file in files %}
+				<option value="{{ file }}"{% if auth_user().hljs_theme == file %} selected{% endif %}>{{ name }}</option>
+			{% endfor %}
+		</select>
+	</div>
+{% endblock %}

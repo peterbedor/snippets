@@ -5,10 +5,24 @@ Wee.routes.map({
 	],
 	'$any': 'notifications',
 	'$root': 'snippets',
+	'favorites': 'snippets',
+	'favorites:unload': 'snippets:unload',
+	'languages': {
+		'$slug': 'snippets',
+		'$slug:unload': 'snippets:unload'
+	},
+	'users': {
+		'$slug': {
+			'$root': 'snippets',
+			'$root:unload': 'snippets:unload',
+			'favorites': 'snippets',
+			'favorites:unload': 'snippets:unload'
+		},
+	},
 	'snippets': {
 		'create': {
 			'$root': 'createSnippet',
-			'unload': 'createSnippet:unload'
+			'$root:unload': 'createSnippet:unload'
 		},
 		'$slug': {
 			'$root': [
@@ -18,10 +32,11 @@ Wee.routes.map({
 			'$root:once': [
 				'showSnippet:scrollToComment'
 			],
-			'unload': 'showSnippet:unload'
+			'$root:unload': 'showSnippet:unload'
 		}
 	},
-	'login': 'login'
+	'login': 'login',
+	'settings': 'settings'
 });
 
 Wee.ready('routes:run');

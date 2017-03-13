@@ -1,0 +1,20 @@
+.flash {
+	.display(flex);
+	.justify-content(center);
+	.flex-align-items(center);
+	.fixed(false; 0; 0; 0);
+	.min-height(6);
+	.white();
+	.z-index(99);
+	&__message {
+		.font-size(1.8);
+	}
+	&.-error {
+		.background(@error);
+		.color(@errorText);
+	}
+	&.-success {
+		.background(@success);
+		.color(@successText);
+	}
+}

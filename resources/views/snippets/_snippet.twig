@@ -8,7 +8,7 @@
 			<h3 class="snippet__name">
 				<a href="/snippets/{{ snippet.slug }}">{{ snippet.name }}</a>
 			</h3>
-			<span class="snippet__author-name">by {{ snippet.author.full_name }}</span>
+			<span class="snippet__author-name">by <a href="/users/{{ snippet.author.username }}">{{ snippet.author.full_name }}</a></span>
 		</div>
 		<div class="snippet__snippet-info">
 			<div class="snippet__likes-count">
